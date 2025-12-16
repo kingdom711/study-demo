@@ -13,6 +13,8 @@ import Inventory from './pages/Inventory';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import LandingPage from './pages/LandingPage';
+import TeamPage from './pages/TeamPage';
+import PricingPage from './pages/PricingPage';
 
 // Components
 import RoleSelector from './components/RoleSelector';
@@ -26,6 +28,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
     const [showLandingPage, setShowLandingPage] = useState(true);
+    const [showTeamPage, setShowTeamPage] = useState(false);
+    const [showPricingPage, setShowPricingPage] = useState(false);
     const [showLaunchScreen, setShowLaunchScreen] = useState(false);
     const [isPlayingBgm, setIsPlayingBgm] = useState(false);
     const [user, setUser] = useState(null);
@@ -64,6 +68,37 @@ function App() {
 
     const handleEnterFromLanding = () => {
         setShowLandingPage(false);
+        setShowTeamPage(false);
+        setShowPricingPage(true);
+    };
+
+    const handleShowTeam = () => {
+        setShowLandingPage(false);
+        setShowTeamPage(true);
+    };
+
+    const handleBackFromTeam = () => {
+        setShowTeamPage(false);
+        setShowLandingPage(true);
+    };
+
+    const handleBackFromPricing = () => {
+        setShowPricingPage(false);
+        setShowLandingPage(true);
+    };
+
+    const handleSelectPlan = ({ plan, userData }) => {
+        // 회원가입 처리
+        setUser(userData);
+        userProfile.setName(userData.name);
+        
+        // 요금제 정보 저장 (추후 사용을 위해)
+        localStorage.setItem('selectedPlan', JSON.stringify(plan));
+        if (userData.companyName) {
+            localStorage.setItem('companyName', userData.companyName);
+        }
+        
+        setShowPricingPage(false);
         setShowLaunchScreen(true);
     };
 
@@ -90,7 +125,7 @@ function App() {
         );
     }
 
-    console.log("App Render State:", { showLandingPage, showLaunchScreen, user, selectedRole });
+    console.log("App Render State:", { showLandingPage, showPricingPage, showLaunchScreen, user, selectedRole });
 
     return (
         <BrowserRouter>
@@ -103,7 +138,11 @@ function App() {
                     />
 
                     {showLandingPage ? (
-                        <LandingPage onEnter={handleEnterFromLanding} />
+                        <LandingPage onEnter={handleEnterFromLanding} onShowTeam={handleShowTeam} />
+                    ) : showTeamPage ? (
+                        <TeamPage onBack={handleBackFromTeam} />
+                    ) : showPricingPage ? (
+                        <PricingPage onSelectPlan={handleSelectPlan} onBack={handleBackFromPricing} />
                     ) : showLaunchScreen ? (
                         <LaunchScreen onStart={handleStartGame} />
                     ) : !user ? (

@@ -1,108 +1,62 @@
 import React, { useState, useEffect } from 'react';
+import safetyEducationVideo from '../assets/안전_교육_영상.mp4';
 
-const LandingPage = ({ onEnter }) => {
+const LandingPage = ({ onEnter, onShowTeam }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [activeTab, setActiveTab] = useState(0);
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    const personas = [
+    const gameFeatures = [
         {
-            id: 'supervisor',
-            emoji: '👤',
-            name: '박소장',
-            role: '현장 소장 / 관리책임자',
-            pain: '"점검은 했는데 증명이 안 되는" 상황이 반복됩니다',
-            value: '법정 점검표의 표준화·전자화로 감사·점검 시 즉시 제출 가능한 증빙 체계 확보'
-        },
-        {
-            id: 'manager',
-            emoji: '📋',
-            name: '김대리',
-            role: '안전/점검 실무 담당자',
-            pain: '사진·서류·엑셀·메신저가 뒤섞여 관리가 어렵습니다',
-            value: '체크리스트 자동 취합 및 상태 관리, "내 할 일" 기반 업무 우선순위 정리'
-        },
-        {
-            id: 'executive',
-            emoji: '🛡️',
-            name: '이팀장',
-            role: '안전팀장 / 리스크 책임자',
-            pain: '사고 발생 시 책임소재·관리 여부 입증이 부담됩니다',
-            value: 'AI 위험도 기반 고위험 작업 상시 가시화, 조치 이력 타임라인으로 책임 추적'
-        }
-    ];
-
-    const features = [
-        {
-            icon: '📝',
-            title: '법정 기준 체크리스트 전산화',
-            description: '사다리 / 고소작업대 / 밀폐공간 법정 자율점검표를 표준 템플릿으로 시스템화',
-            keywords: ['법정 점검표 기반', '모바일 안전 체크리스트', '자동 취합']
-        },
-        {
-            icon: '🔄',
-            title: '역할 기반 워크플로우 자동화',
-            description: '기술인 → 관리감독자 → 안전관리자 간 점검·승인·조치 흐름을 자동 기록',
-            keywords: ['승인·반려 워크플로우', '역할 기반 관리', '이력 자동 기록']
-        },
-        {
-            icon: '🤖',
-            title: 'AI 기반 사진 위험도 분석',
-            description: '작업 사진 업로드 시 AI가 위험도(안전/주의/위험) 자동 판별, 고위험 건 상위 노출',
-            keywords: ['AI 위험도 분석', '작업사진 위험 판별', '고위험 작업 자동 감지']
-        },
-        {
-            icon: '✅',
-            title: '"내 할 일" 중심 실무 UX',
-            description: '알림 과부하 없이 각 역할별 지금 당장 해야 할 일만 노출',
-            keywords: ['업무 우선순위', '즉시 인지', '효율적 관리']
-        }
-    ];
-
-    const stats = [
-        { number: '100%', label: '법정 점검표 기반', desc: '사다리·고소·밀폐공간' },
-        { number: '3단계', label: '워크플로우 자동화', desc: '점검→승인→조치' },
-        { number: '실시간', label: 'AI 위험도 분석', desc: '고위험 건 자동 감지' }
-    ];
-
-    const agents = [
-        {
-            icon: '📋',
-            name: '점검 에이전트',
-            desc: '작업자는 체크하고,\n점검 에이전트는 누락을 허용하지 않습니다.',
+            icon: '🎯',
+            title: '퀘스트 시스템',
+            description: '일일·주간·월간 안전 미션을 수행하고 보상을 획득하세요',
             color: '#60a5fa'
         },
         {
-            icon: '🔍',
-            name: '감독 에이전트',
-            desc: '위험한 항목만 자동으로 골라\n감독자에게 보여줍니다.',
+            icon: '⭐',
+            title: '레벨업 & 경험치',
+            description: '안전 활동을 할수록 레벨이 오르고 새로운 능력이 해금됩니다',
+            color: '#fbbf24'
+        },
+        {
+            icon: '👕',
+            title: '아바타 꾸미기',
+            description: '안전모, 조끼, 장비 아이템을 수집하고 나만의 캐릭터를 완성하세요',
             color: '#a78bfa'
         },
         {
-            icon: '👁️',
-            name: 'AI 시각 에이전트',
-            desc: '사진을 보는 눈,\n사람이 아니라 AI에게 맡기세요.',
+            icon: '🏆',
+            title: '랭킹 & 경쟁',
+            description: '동료들과 안전 점수를 겨루고 우리 현장 안전왕에 도전하세요',
             color: '#34d399'
-        },
-        {
-            icon: '📝',
-            name: '기록·증빙 에이전트',
-            desc: '기억하지 않아도 됩니다.\nAI는 모든 과정을 증거로 남깁니다.',
-            color: '#fbbf24'
         }
+    ];
+
+    const questExamples = [
+        { type: 'Daily', name: '안전모 착용 인증하기', xp: '+50 XP', icon: '🪖' },
+        { type: 'Daily', name: 'TBM 참석하기', xp: '+30 XP', icon: '📋' },
+        { type: 'Weekly', name: '5일 연속 출석 달성', xp: '+200 XP', icon: '🔥' },
+        { type: 'Monthly', name: '무사고 30일 달성', xp: '+1000 XP', icon: '🛡️' }
+    ];
+
+    const problems = [
+        { icon: '😴', text: '지루하고 반복적인 안전 점검' },
+        { icon: '😤', text: '강제로 해야 하는 안전 교육' },
+        { icon: '🤷', text: '동기부여 없는 안전 활동' },
+        { icon: '📉', text: '낮은 참여율과 형식적 보고' }
     ];
 
     return (
         <div className="landing-page" style={{
             minHeight: '100vh',
-            background: '#0f172a',
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
             color: 'white',
             overflowX: 'hidden'
         }}>
-            {/* Multi-Agent Hero Section - 패러다임 선언 */}
+            {/* Hero Section - 게이미피케이션 메인 */}
             <section style={{
                 minHeight: '100vh',
                 display: 'flex',
@@ -111,291 +65,26 @@ const LandingPage = ({ onEnter }) => {
                 justifyContent: 'center',
                 padding: '2rem',
                 textAlign: 'center',
-                position: 'relative',
-                background: 'linear-gradient(180deg, #0f172a 0%, #1a1a2e 50%, #0f172a 100%)'
+                position: 'relative'
             }}>
-                {/* 배경 파티클 효과 */}
+                {/* 배경 파티클 */}
                 <div style={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    background: 'radial-gradient(circle at 20% 30%, rgba(96, 165, 250, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(167, 139, 250, 0.1) 0%, transparent 50%)',
+                    background: 'radial-gradient(circle at 20% 20%, rgba(251, 191, 36, 0.15) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.15) 0%, transparent 40%)',
                     pointerEvents: 'none'
                 }} />
 
-                {/* 플로팅 AI 아이콘 */}
-                <div style={{
-                    position: 'absolute',
-                    top: '15%',
-                    left: '10%',
-                    fontSize: '2rem',
-                    opacity: 0.3,
-                    animation: 'float 4s ease-in-out infinite'
-                }}>🤖</div>
-                <div style={{
-                    position: 'absolute',
-                    top: '25%',
-                    right: '15%',
-                    fontSize: '1.8rem',
-                    opacity: 0.25,
-                    animation: 'float 5s ease-in-out infinite 1s'
-                }}>🧠</div>
-                <div style={{
-                    position: 'absolute',
-                    bottom: '25%',
-                    left: '15%',
-                    fontSize: '1.5rem',
-                    opacity: 0.2,
-                    animation: 'float 4.5s ease-in-out infinite 0.5s'
-                }}>⚡</div>
-                <div style={{
-                    position: 'absolute',
-                    bottom: '30%',
-                    right: '10%',
-                    fontSize: '1.8rem',
-                    opacity: 0.25,
-                    animation: 'float 5.5s ease-in-out infinite 1.5s'
-                }}>🛡️</div>
-
-                <div style={{
-                    position: 'relative',
-                    zIndex: 1,
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-                    transition: 'all 0.8s ease-out',
-                    maxWidth: '1000px'
-                }}>
-                    {/* 뱃지 */}
-                    <div style={{
-                        display: 'inline-block',
-                        background: 'linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(167, 139, 250, 0.2) 100%)',
-                        border: '1px solid rgba(96, 165, 250, 0.4)',
-                        borderRadius: '50px',
-                        padding: '0.5rem 1.5rem',
-                        fontSize: '0.9rem',
-                        color: '#a5b4fc',
-                        marginBottom: '2rem'
-                    }}>
-                        🤖 Multi-Agent AI 안전관리 플랫폼
-                    </div>
-
-                    {/* 메인 헤드라인 */}
-                    <h1 style={{
-                        fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                        fontWeight: '800',
-                        lineHeight: 1.3,
-                        marginBottom: '1.5rem'
-                    }}>
-                        <span style={{ color: '#94a3b8' }}>안전관리,</span><br />
-                        <span style={{
-                            background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent'
-                        }}>이제 혼자 하지 마세요.</span><br />
-                        <span style={{ color: 'white' }}>AI들이 팀이 됩니다.</span>
-                    </h1>
-
-                    {/* 서브 헤드라인 */}
-                    <p style={{
-                        fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
-                        color: '#94a3b8',
-                        maxWidth: '700px',
-                        margin: '0 auto 2.5rem',
-                        lineHeight: 1.7
-                    }}>
-                        <span style={{ color: '#60a5fa' }}>점검하는 AI</span>, <span style={{ color: '#a78bfa' }}>판단하는 AI</span>, <span style={{ color: '#34d399' }}>기억하는 AI</span>.<br />
-                        당신을 대신해 일하는 <strong style={{ color: 'white' }}>안전관리 팀</strong>
-                    </p>
-
-                    {/* 4개 에이전트 카드 */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                        gap: '1rem',
-                        marginBottom: '3rem',
-                        maxWidth: '950px',
-                        margin: '0 auto 3rem'
-                    }}>
-                        {agents.map((agent, index) => (
-                            <div key={index} style={{
-                                background: 'rgba(255, 255, 255, 0.03)',
-                                border: `1px solid ${agent.color}33`,
-                                borderRadius: '16px',
-                                padding: '1.5rem',
-                                textAlign: 'center',
-                                transition: 'all 0.3s ease',
-                                cursor: 'default'
-                            }}
-                                onMouseOver={(e) => {
-                                    e.currentTarget.style.background = `${agent.color}15`;
-                                    e.currentTarget.style.borderColor = `${agent.color}66`;
-                                    e.currentTarget.style.transform = 'translateY(-5px)';
-                                }}
-                                onMouseOut={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-                                    e.currentTarget.style.borderColor = `${agent.color}33`;
-                                    e.currentTarget.style.transform = 'translateY(0)';
-                                }}>
-                                <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>{agent.icon}</div>
-                                <div style={{
-                                    color: agent.color,
-                                    fontWeight: '700',
-                                    fontSize: '1rem',
-                                    marginBottom: '0.5rem'
-                                }}>
-                                    {agent.name}
-                                </div>
-                                <p style={{
-                                    color: '#94a3b8',
-                                    fontSize: '0.85rem',
-                                    lineHeight: 1.5,
-                                    whiteSpace: 'pre-line',
-                                    margin: 0
-                                }}>
-                                    {agent.desc}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* 히어로 비디오 */}
-                    <div style={{
-                        maxWidth: '800px',
-                        margin: '0 auto 2.5rem',
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
-                        border: '1px solid rgba(96, 165, 250, 0.2)'
-                    }}>
-                        <video
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            style={{
-                                width: '100%',
-                                height: 'auto',
-                                display: 'block'
-                            }}
-                        >
-                            <source src="/assets/B_B_SaaS_Hero_Video_Generation.mp4" type="video/mp4" />
-                            브라우저가 비디오를 지원하지 않습니다.
-                        </video>
-                    </div>
-
-                    {/* 차별화 메시지 */}
-                    <div style={{
-                        background: 'rgba(96, 165, 250, 0.08)',
-                        border: '1px solid rgba(96, 165, 250, 0.2)',
-                        borderRadius: '12px',
-                        padding: '1.25rem 2rem',
-                        maxWidth: '700px',
-                        margin: '0 auto 2.5rem'
-                    }}>
-                        <p style={{
-                            color: '#e2e8f0',
-                            fontSize: '1rem',
-                            lineHeight: 1.6,
-                            margin: 0
-                        }}>
-                            ❌ 우리는 AI 기능을 붙이지 않았습니다.<br />
-                            ✅ <strong style={{ color: '#60a5fa' }}>AI가 일을 하도록 구조를 바꿨습니다.</strong>
-                        </p>
-                    </div>
-
-                    {/* CTA 버튼 */}
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <button
-                            onClick={onEnter}
-                            style={{
-                                padding: '1rem 2.5rem',
-                                fontSize: '1.1rem',
-                                fontWeight: '700',
-                                background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '50px',
-                                cursor: 'pointer',
-                                boxShadow: '0 8px 30px rgba(96, 165, 250, 0.4)',
-                                transition: 'all 0.3s ease'
-                            }}
-                            onMouseOver={(e) => {
-                                e.target.style.transform = 'translateY(-2px)';
-                                e.target.style.boxShadow = '0 12px 40px rgba(96, 165, 250, 0.5)';
-                            }}
-                            onMouseOut={(e) => {
-                                e.target.style.transform = 'translateY(0)';
-                                e.target.style.boxShadow = '0 8px 30px rgba(96, 165, 250, 0.4)';
-                            }}
-                        >
-                            🤖 AI 안전관리 팀 만나보기
-                        </button>
-                        <button
-                            style={{
-                                padding: '1rem 2.5rem',
-                                fontSize: '1.1rem',
-                                fontWeight: '600',
-                                background: 'transparent',
-                                color: '#94a3b8',
-                                border: '1px solid #475569',
-                                borderRadius: '50px',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease'
-                            }}
-                            onMouseOver={(e) => {
-                                e.target.style.borderColor = '#60a5fa';
-                                e.target.style.color = '#60a5fa';
-                            }}
-                            onMouseOut={(e) => {
-                                e.target.style.borderColor = '#475569';
-                                e.target.style.color = '#94a3b8';
-                            }}
-                        >
-                            멀티에이전트 데모 보기
-                        </button>
-                    </div>
-                </div>
-
-                {/* 스크롤 힌트 */}
-                <div style={{
-                    position: 'absolute',
-                    bottom: '2rem',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    animation: 'bounce 2s infinite'
-                }}>
-                    <div style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-                        스크롤하여 더 알아보기
-                    </div>
-                    <div style={{ fontSize: '1.5rem', color: '#64748b' }}>↓</div>
-                </div>
-            </section>
-
-            {/* Hero Section 2 - 중대재해 대응 핵심 메시지 */}
-            <section style={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '2rem',
-                textAlign: 'center',
-                position: 'relative',
-                background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)'
-            }}>
-                {/* 배경 그래디언트 효과 */}
-                <div style={{
-                    position: 'absolute',
-                    top: '20%',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '600px',
-                    height: '600px',
-                    background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
-                    pointerEvents: 'none'
-                }} />
+                {/* 플로팅 게임 아이콘 */}
+                <div style={{ position: 'absolute', top: '10%', left: '8%', fontSize: '2.5rem', opacity: 0.4, animation: 'float 4s ease-in-out infinite' }}>🎮</div>
+                <div style={{ position: 'absolute', top: '20%', right: '10%', fontSize: '2rem', opacity: 0.3, animation: 'float 5s ease-in-out infinite 1s' }}>⭐</div>
+                <div style={{ position: 'absolute', bottom: '30%', left: '5%', fontSize: '2rem', opacity: 0.3, animation: 'float 4.5s ease-in-out infinite 0.5s' }}>🏆</div>
+                <div style={{ position: 'absolute', bottom: '20%', right: '8%', fontSize: '2.5rem', opacity: 0.4, animation: 'float 5.5s ease-in-out infinite 1.5s' }}>🎯</div>
+                <div style={{ position: 'absolute', top: '40%', left: '15%', fontSize: '1.5rem', opacity: 0.25, animation: 'float 6s ease-in-out infinite 2s' }}>💎</div>
+                <div style={{ position: 'absolute', top: '60%', right: '15%', fontSize: '1.5rem', opacity: 0.25, animation: 'float 5s ease-in-out infinite 0.8s' }}>🔥</div>
 
                 <div style={{
                     position: 'relative',
@@ -405,214 +94,213 @@ const LandingPage = ({ onEnter }) => {
                     transition: 'all 0.8s ease-out',
                     maxWidth: '900px'
                 }}>
-                    {/* 뱃지 */}
+                    {/* 로고/뱃지 */}
                     <div style={{
-                        display: 'inline-block',
-                        background: 'rgba(239, 68, 68, 0.2)',
-                        border: '1px solid rgba(239, 68, 68, 0.5)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.75rem',
+                        background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(167, 139, 250, 0.2) 100%)',
+                        border: '2px solid rgba(251, 191, 36, 0.4)',
                         borderRadius: '50px',
-                        padding: '0.5rem 1.5rem',
-                        fontSize: '0.9rem',
-                        color: '#fca5a5',
-                        marginBottom: '1.5rem'
+                        padding: '0.75rem 1.75rem',
+                        fontSize: '1rem',
+                        fontWeight: '700',
+                        color: '#fbbf24',
+                        marginBottom: '2rem'
                     }}>
-                        ⚠️ 중대재해처벌법 대응 솔루션
+                        <img src="/assets/safety_road_logo-removebg-preview.png" alt="안전의 길" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
+                        안전의 길 (Safety Quest)
                     </div>
 
-                    {/* 헤드라인 */}
+                    {/* 메인 헤드라인 */}
                     <h1 style={{
-                        fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                        fontWeight: '800',
+                        fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                        fontWeight: '900',
                         lineHeight: 1.2,
-                        marginBottom: '1.5rem'
+                        marginBottom: '1.5rem',
+                        textShadow: '0 4px 30px rgba(0,0,0,0.3)'
                     }}>
-                        <span style={{ color: '#60a5fa' }}>점검은 했는데,</span><br />
-                        <span style={{ color: 'white' }}>증명이 안 되는 문제를 끝내다</span>
+                        <span style={{ color: '#94a3b8' }}>안전관리가</span><br />
+                        <span style={{
+                            background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ef4444 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent'
+                        }}>게임이 되는 순간</span>
                     </h1>
 
-                    {/* 서브헤드라인 */}
+                    {/* 서브 헤드라인 */}
                     <p style={{
-                        fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
-                        color: '#94a3b8',
+                        fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+                        color: '#e2e8f0',
                         maxWidth: '700px',
-                        margin: '0 auto 2rem',
-                        lineHeight: 1.7
+                        margin: '0 auto 2.5rem',
+                        lineHeight: 1.8,
+                        fontWeight: '500'
                     }}>
-                        법정 자율점검표를 기반으로 한 <strong style={{ color: '#60a5fa' }}>AI 안전관리 솔루션</strong><br />
-                        점검 → 승인 → 조치의 전 과정을 자동 기록하여<br />
-                        <strong style={{ color: 'white' }}>사고 예방과 법적 리스크를 동시에 줄입니다</strong>
+                        <strong style={{ color: '#fbbf24' }}>퀘스트</strong>를 수행하고, <strong style={{ color: '#a78bfa' }}>레벨업</strong>하고, <strong style={{ color: '#34d399' }}>보상</strong>을 받으세요.<br />
+                        현장 안전관리를 <strong style={{ color: 'white' }}>자발적으로 모두가 참여</strong>하게 하는<br />
+                        <span style={{ color: '#60a5fa' }}>게이미피케이션 플랫폼</span>
                     </p>
+
+                    {/* 안전 교육 영상 */}
+                    <div style={{
+                        marginBottom: '2.5rem',
+                        borderRadius: '20px',
+                        overflow: 'hidden',
+                        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
+                        border: '2px solid rgba(255, 255, 255, 0.1)',
+                        maxWidth: '600px',
+                        margin: '0 auto 2.5rem'
+                    }}>
+                        <video
+                            src={safetyEducationVideo}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            style={{
+                                width: '100%',
+                                display: 'block'
+                            }}
+                        />
+                    </div>
+
+                    {/* 미니 스탯 카드 */}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '2rem',
+                        marginBottom: '3rem',
+                        flexWrap: 'wrap'
+                    }}>
+                        {[
+                            { icon: '🎯', label: '일일 퀘스트', value: '5+' },
+                            { icon: '⭐', label: '레벨 시스템', value: '50 LV' },
+                            { icon: '👕', label: '수집 아이템', value: '100+' }
+                        ].map((stat, index) => (
+                            <div key={index} style={{
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                borderRadius: '16px',
+                                padding: '1rem 1.5rem',
+                                textAlign: 'center',
+                                backdropFilter: 'blur(10px)'
+                            }}>
+                                <div style={{ fontSize: '1.5rem', marginBottom: '0.25rem' }}>{stat.icon}</div>
+                                <div style={{ color: '#fbbf24', fontSize: '1.25rem', fontWeight: '800' }}>{stat.value}</div>
+                                <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>{stat.label}</div>
+                            </div>
+                        ))}
+                    </div>
 
                     {/* CTA 버튼 */}
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                         <button
                             onClick={onEnter}
                             style={{
-                                padding: '1rem 2.5rem',
-                                fontSize: '1.1rem',
-                                fontWeight: '700',
-                                background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                                color: 'white',
+                                padding: '1.25rem 3rem',
+                                fontSize: '1.2rem',
+                                fontWeight: '800',
+                                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                                color: '#1a1a2e',
                                 border: 'none',
-                                borderRadius: '8px',
+                                borderRadius: '50px',
                                 cursor: 'pointer',
-                                boxShadow: '0 8px 30px rgba(59, 130, 246, 0.4)',
-                                transition: 'all 0.3s ease'
+                                boxShadow: '0 8px 30px rgba(251, 191, 36, 0.4)',
+                                transition: 'all 0.3s ease',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
                             }}
                             onMouseOver={(e) => {
-                                e.target.style.transform = 'translateY(-2px)';
-                                e.target.style.boxShadow = '0 12px 40px rgba(59, 130, 246, 0.5)';
+                                e.target.style.transform = 'translateY(-3px) scale(1.02)';
+                                e.target.style.boxShadow = '0 12px 40px rgba(251, 191, 36, 0.5)';
                             }}
                             onMouseOut={(e) => {
-                                e.target.style.transform = 'translateY(0)';
-                                e.target.style.boxShadow = '0 8px 30px rgba(59, 130, 246, 0.4)';
+                                e.target.style.transform = 'translateY(0) scale(1)';
+                                e.target.style.boxShadow = '0 8px 30px rgba(251, 191, 36, 0.4)';
                             }}
                         >
-                            무료로 시작하기
+                            🎮 게임 시작하기
                         </button>
                         <button
                             style={{
-                                padding: '1rem 2.5rem',
+                                padding: '1.25rem 2.5rem',
                                 fontSize: '1.1rem',
                                 fontWeight: '600',
-                                background: 'transparent',
-                                color: '#94a3b8',
-                                border: '1px solid #475569',
-                                borderRadius: '8px',
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                color: 'white',
+                                border: '2px solid rgba(255, 255, 255, 0.3)',
+                                borderRadius: '50px',
                                 cursor: 'pointer',
-                                transition: 'all 0.3s ease'
+                                transition: 'all 0.3s ease',
+                                backdropFilter: 'blur(10px)'
                             }}
                             onMouseOver={(e) => {
-                                e.target.style.borderColor = '#60a5fa';
-                                e.target.style.color = '#60a5fa';
+                                e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+                                e.target.style.borderColor = 'rgba(255, 255, 255, 0.5)';
                             }}
                             onMouseOut={(e) => {
-                                e.target.style.borderColor = '#475569';
-                                e.target.style.color = '#94a3b8';
+                                e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
                             }}
                         >
-                            데모 영상 보기
+                            📖 게임 소개 보기
                         </button>
                     </div>
-
-                    {/* 신뢰 지표 */}
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: '2rem',
-                        marginTop: '3rem',
-                        flexWrap: 'wrap'
-                    }}>
-                        {stats.map((stat, index) => (
-                            <div key={index} style={{ textAlign: 'center' }}>
-                                <div style={{
-                                    fontSize: '1.75rem',
-                                    fontWeight: '800',
-                                    color: '#60a5fa'
-                                }}>{stat.number}</div>
-                                <div style={{ fontSize: '0.9rem', color: '#94a3b8' }}>{stat.label}</div>
-                                <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{stat.desc}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* 스크롤 힌트 */}
-                <div style={{
-                    position: 'absolute',
-                    bottom: '2rem',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    animation: 'bounce 2s infinite'
-                }}>
-                    <div style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-                        더 알아보기
-                    </div>
-                    <div style={{ fontSize: '1.5rem', color: '#64748b' }}>↓</div>
                 </div>
             </section>
 
-            {/* Problem Section - 문제 인식 */}
+            {/* Problem Section - 기존 안전관리의 문제 */}
             <section style={{
                 padding: '6rem 2rem',
-                background: '#1e293b',
+                background: 'linear-gradient(180deg, #0f3460 0%, #1a1a2e 100%)',
                 textAlign: 'center'
             }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                     <div style={{
                         display: 'inline-block',
-                        background: 'rgba(239, 68, 68, 0.1)',
+                        background: 'rgba(239, 68, 68, 0.15)',
                         border: '1px solid rgba(239, 68, 68, 0.3)',
                         borderRadius: '50px',
                         padding: '0.5rem 1.5rem',
-                        fontSize: '0.85rem',
+                        fontSize: '0.9rem',
                         color: '#fca5a5',
                         marginBottom: '1.5rem'
                     }}>
-                        현장의 구조적 문제
+                        😫 기존 안전관리의 문제
                     </div>
 
                     <h2 style={{
-                        fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                        fontWeight: '700',
+                        fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+                        fontWeight: '800',
                         marginBottom: '1rem',
                         color: 'white'
                     }}>
-                        안전관리는 하고 있으나,<br />
-                        <span style={{ color: '#f87171' }}>증명·추적·예방이 구조적으로 어렵습니다</span>
+                        왜 안전관리는 항상<br />
+                        <span style={{ color: '#f87171' }}>"억지로" 해야 할까요?</span>
                     </h2>
+
+                    <p style={{ color: '#94a3b8', marginBottom: '3rem', fontSize: '1.1rem' }}>
+                        강제로 시키면 형식적으로만 하게 됩니다
+                    </p>
 
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '1.5rem',
-                        marginTop: '3rem'
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                        gap: '1.5rem'
                     }}>
-                        {[
-                            {
-                                icon: '📄',
-                                title: '수기·분산 관리',
-                                desc: '법정 자율점검·안전서류가 누락, 중복, 사후 보완 반복'
-                            },
-                            {
-                                icon: '🔗',
-                                title: '워크플로우 단절',
-                                desc: '작업자-감독자-안전관리자 간 점검·승인·조치 흐름이 끊어짐'
-                            },
-                            {
-                                icon: '📷',
-                                title: '주관적 판단',
-                                desc: '사진은 있지만 객관적 위험 기준 없이 사후 판단에 의존'
-                            },
-                            {
-                                icon: '👁️',
-                                title: '가시성 부족',
-                                desc: '실시간 위험 현황을 한눈에 볼 수 없어 감(感)에 의존'
-                            },
-                            {
-                                icon: '⚖️',
-                                title: '책임 추적 부담',
-                                desc: '"점검했는가/승인했는가/조치했는가" 입증이 어려움'
-                            },
-                            {
-                                icon: '📊',
-                                title: '법적 리스크',
-                                desc: '보고·점검·조치 이력이 흩어져 중대재해법 대응 곤란'
-                            }
-                        ].map((item, index) => (
+                        {problems.map((problem, index) => (
                             <div key={index} style={{
-                                background: 'rgba(239, 68, 68, 0.05)',
-                                border: '1px solid rgba(239, 68, 68, 0.15)',
-                                borderRadius: '12px',
-                                padding: '1.5rem',
-                                textAlign: 'left'
+                                background: 'rgba(239, 68, 68, 0.08)',
+                                border: '1px solid rgba(239, 68, 68, 0.2)',
+                                borderRadius: '16px',
+                                padding: '2rem 1.5rem',
+                                transition: 'all 0.3s ease'
                             }}>
-                                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{item.icon}</div>
-                                <h4 style={{ color: '#fca5a5', marginBottom: '0.5rem', fontWeight: '600' }}>
-                                    {item.title}
-                                </h4>
-                                <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.5 }}>
-                                    {item.desc}
+                                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{problem.icon}</div>
+                                <p style={{ color: '#e2e8f0', fontSize: '1rem', fontWeight: '500', margin: 0 }}>
+                                    {problem.text}
                                 </p>
                             </div>
                         ))}
@@ -620,67 +308,83 @@ const LandingPage = ({ onEnter }) => {
                 </div>
             </section>
 
-            {/* Solution Section - 해결 방안 */}
+            {/* Solution Section - 게이미피케이션 소개 */}
             <section style={{
                 padding: '6rem 2rem',
-                background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
+                background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 100%)',
                 textAlign: 'center'
             }}>
-                <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     <div style={{
                         display: 'inline-block',
-                        background: 'rgba(34, 197, 94, 0.1)',
+                        background: 'rgba(34, 197, 94, 0.15)',
                         border: '1px solid rgba(34, 197, 94, 0.3)',
                         borderRadius: '50px',
                         padding: '0.5rem 1.5rem',
-                        fontSize: '0.85rem',
+                        fontSize: '0.9rem',
                         color: '#86efac',
                         marginBottom: '1.5rem'
                     }}>
-                        안전의 길 솔루션
+                        ✨ 해결책: 게이미피케이션
                     </div>
 
                     <h2 style={{
-                        fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                        fontWeight: '700',
+                        fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+                        fontWeight: '800',
                         marginBottom: '1rem',
                         color: 'white'
                     }}>
-                        <span style={{ color: '#86efac' }}>증빙 자동화</span>로<br />
-                        사고 예방과 법적 리스크를 동시에 해결
+                        <span style={{ color: '#fbbf24' }}>게임처럼</span> 재미있게,<br />
+                        <span style={{ color: '#34d399' }}>자발적으로</span> 참여하게
                     </h2>
+
+                    <p style={{ color: '#94a3b8', marginBottom: '3rem', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto 3rem' }}>
+                        퀘스트를 수행하면 경험치와 보상을 얻고,<br />
+                        레벨업하면서 아바타를 성장시키세요
+                    </p>
 
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                        gap: '1.5rem',
-                        marginTop: '3rem'
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
+                        gap: '1.5rem'
                     }}>
-                        {features.map((feature, index) => (
+                        {gameFeatures.map((feature, index) => (
                             <div key={index} style={{
-                                background: 'rgba(34, 197, 94, 0.05)',
-                                border: '1px solid rgba(34, 197, 94, 0.15)',
-                                borderRadius: '16px',
+                                background: 'rgba(255, 255, 255, 0.03)',
+                                border: `2px solid ${feature.color}33`,
+                                borderRadius: '20px',
                                 padding: '2rem',
-                                textAlign: 'left',
-                                transition: 'all 0.3s ease'
-                            }}>
+                                textAlign: 'center',
+                                transition: 'all 0.3s ease',
+                                cursor: 'default'
+                            }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.background = `${feature.color}15`;
+                                    e.currentTarget.style.borderColor = `${feature.color}66`;
+                                    e.currentTarget.style.transform = 'translateY(-8px)';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+                                    e.currentTarget.style.borderColor = `${feature.color}33`;
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                }}>
                                 <div style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    background: 'rgba(34, 197, 94, 0.15)',
-                                    borderRadius: '12px',
+                                    width: '70px',
+                                    height: '70px',
+                                    background: `${feature.color}20`,
+                                    borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    fontSize: '1.5rem',
-                                    marginBottom: '1rem'
+                                    fontSize: '2rem',
+                                    margin: '0 auto 1rem',
+                                    border: `2px solid ${feature.color}40`
                                 }}>
                                     {feature.icon}
                                 </div>
                                 <h3 style={{
-                                    color: 'white',
-                                    fontSize: '1.1rem',
+                                    color: feature.color,
+                                    fontSize: '1.2rem',
                                     fontWeight: '700',
                                     marginBottom: '0.75rem'
                                 }}>
@@ -690,296 +394,191 @@ const LandingPage = ({ onEnter }) => {
                                     color: '#94a3b8',
                                     fontSize: '0.9rem',
                                     lineHeight: 1.6,
-                                    marginBottom: '1rem'
+                                    margin: 0
                                 }}>
                                     {feature.description}
                                 </p>
-                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                                    {feature.keywords.map((keyword, i) => (
-                                        <span key={i} style={{
-                                            background: 'rgba(34, 197, 94, 0.1)',
-                                            color: '#86efac',
-                                            fontSize: '0.75rem',
-                                            padding: '0.25rem 0.75rem',
-                                            borderRadius: '50px'
-                                        }}>
-                                            {keyword}
-                                        </span>
-                                    ))}
-                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Workflow Visualization */}
+            {/* Quest Examples Section */}
             <section style={{
                 padding: '6rem 2rem',
-                background: '#1e293b',
+                background: 'linear-gradient(180deg, #16213e 0%, #0f3460 100%)',
                 textAlign: 'center'
             }}>
-                <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-                    <h2 style={{
-                        fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-                        fontWeight: '700',
-                        marginBottom: '3rem',
-                        color: 'white'
-                    }}>
-                        모든 흐름이 <span style={{ color: '#60a5fa' }}>자동으로 기록</span>됩니다
-                    </h2>
-
+                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                     <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '1rem',
-                        flexWrap: 'wrap'
+                        display: 'inline-block',
+                        background: 'rgba(96, 165, 250, 0.15)',
+                        border: '1px solid rgba(96, 165, 250, 0.3)',
+                        borderRadius: '50px',
+                        padding: '0.5rem 1.5rem',
+                        fontSize: '0.9rem',
+                        color: '#60a5fa',
+                        marginBottom: '1.5rem'
                     }}>
-                        {[
-                            { role: '기술인', action: '체크리스트 작성', icon: '👷' },
-                            { role: '관리감독자', action: '검토 및 승인', icon: '👔' },
-                            { role: '안전관리자', action: '조치 기록', icon: '🛡️' }
-                        ].map((step, index) => (
-                            <React.Fragment key={index}>
-                                <div style={{
-                                    background: 'rgba(59, 130, 246, 0.1)',
-                                    border: '2px solid rgba(59, 130, 246, 0.3)',
-                                    borderRadius: '16px',
-                                    padding: '1.5rem 2rem',
-                                    minWidth: '180px'
-                                }}>
-                                    <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{step.icon}</div>
-                                    <div style={{ color: '#60a5fa', fontWeight: '700', marginBottom: '0.25rem' }}>
-                                        {step.role}
-                                    </div>
-                                    <div style={{ color: '#94a3b8', fontSize: '0.85rem' }}>{step.action}</div>
-                                </div>
-                                {index < 2 && (
-                                    <div style={{
-                                        color: '#60a5fa',
-                                        fontSize: '1.5rem',
-                                        animation: 'pulse 1.5s infinite'
-                                    }}>→</div>
-                                )}
-                            </React.Fragment>
-                        ))}
+                        🎯 퀘스트 시스템
                     </div>
 
-                    <div style={{
-                        marginTop: '2rem',
-                        padding: '1rem 2rem',
-                        background: 'rgba(34, 197, 94, 0.1)',
-                        border: '1px solid rgba(34, 197, 94, 0.3)',
-                        borderRadius: '12px',
-                        display: 'inline-block'
-                    }}>
-                        <span style={{ color: '#86efac', fontWeight: '600' }}>✓ 모든 단계가 자동 기록</span>
-                        <span style={{ color: '#94a3b8' }}> → 감사·사고·분쟁 시 객관적 근거 확보</span>
-                    </div>
-                </div>
-            </section>
-
-            {/* Persona Section - 고객별 가치 */}
-            <section style={{
-                padding: '6rem 2rem',
-                background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
-                textAlign: 'center'
-            }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     <h2 style={{
-                        fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-                        fontWeight: '700',
+                        fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+                        fontWeight: '800',
                         marginBottom: '1rem',
                         color: 'white'
                     }}>
-                        <span style={{ color: '#a78bfa' }}>역할별</span> 핵심 가치
+                        매일 새로운 <span style={{ color: '#60a5fa' }}>안전 미션</span>을 수행하세요
                     </h2>
+
                     <p style={{ color: '#94a3b8', marginBottom: '3rem' }}>
-                        현장 실무자부터 경영진까지, 모두에게 필요한 솔루션
+                        일일·주간·월간 퀘스트로 꾸준한 안전 습관을 만들어갑니다
                     </p>
 
-                    {/* 탭 버튼 */}
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: '0.5rem',
-                        marginBottom: '2rem',
-                        flexWrap: 'wrap'
-                    }}>
-                        {personas.map((persona, index) => (
-                            <button
-                                key={index}
-                                onClick={() => setActiveTab(index)}
-                                style={{
-                                    padding: '0.75rem 1.5rem',
-                                    background: activeTab === index
-                                        ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)'
-                                        : 'rgba(124, 58, 237, 0.1)',
-                                    border: activeTab === index
-                                        ? 'none'
-                                        : '1px solid rgba(124, 58, 237, 0.3)',
-                                    borderRadius: '8px',
-                                    color: 'white',
-                                    fontWeight: '600',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                {persona.emoji} {persona.name}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* 페르소나 카드 */}
-                    <div style={{
-                        background: 'rgba(124, 58, 237, 0.1)',
-                        border: '1px solid rgba(124, 58, 237, 0.3)',
-                        borderRadius: '20px',
-                        padding: '2.5rem',
-                        textAlign: 'left'
-                    }}>
-                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1.5rem' }}>
-                            <div style={{
-                                width: '60px',
-                                height: '60px',
-                                background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                                borderRadius: '50%',
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {questExamples.map((quest, index) => (
+                            <div key={index} style={{
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                borderRadius: '16px',
+                                padding: '1.25rem 2rem',
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '1.75rem'
-                            }}>
-                                {personas[activeTab].emoji}
+                                justifyContent: 'space-between',
+                                transition: 'all 0.3s ease'
+                            }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                                    e.currentTarget.style.transform = 'translateX(10px)';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                                    e.currentTarget.style.transform = 'translateX(0)';
+                                }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                    <span style={{ fontSize: '2rem' }}>{quest.icon}</span>
+                                    <div style={{ textAlign: 'left' }}>
+                                        <span style={{
+                                            background: quest.type === 'Daily' ? '#60a5fa' : quest.type === 'Weekly' ? '#a78bfa' : '#fbbf24',
+                                            color: '#1a1a2e',
+                                            fontSize: '0.7rem',
+                                            fontWeight: '700',
+                                            padding: '0.2rem 0.6rem',
+                                            borderRadius: '50px',
+                                            marginRight: '0.5rem'
+                                        }}>
+                                            {quest.type}
+                                        </span>
+                                        <span style={{ color: 'white', fontWeight: '600' }}>{quest.name}</span>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    background: 'rgba(251, 191, 36, 0.2)',
+                                    color: '#fbbf24',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '50px',
+                                    fontWeight: '700',
+                                    fontSize: '0.9rem'
+                                }}>
+                                    {quest.xp}
+                                </div>
                             </div>
-                            <div>
-                                <h3 style={{ color: 'white', fontSize: '1.25rem', fontWeight: '700' }}>
-                                    {personas[activeTab].name}
-                                </h3>
-                                <p style={{ color: '#a78bfa', fontSize: '0.9rem' }}>
-                                    {personas[activeTab].role}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div style={{
-                            background: 'rgba(239, 68, 68, 0.1)',
-                            border: '1px solid rgba(239, 68, 68, 0.2)',
-                            borderRadius: '12px',
-                            padding: '1rem 1.5rem',
-                            marginBottom: '1.5rem'
-                        }}>
-                            <div style={{ color: '#fca5a5', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.5rem' }}>
-                                😫 현재 Pain
-                            </div>
-                            <p style={{ color: '#f1f5f9', fontSize: '1rem', fontStyle: 'italic', margin: 0 }}>
-                                {personas[activeTab].pain}
-                            </p>
-                        </div>
-
-                        <div style={{
-                            background: 'rgba(34, 197, 94, 0.1)',
-                            border: '1px solid rgba(34, 197, 94, 0.2)',
-                            borderRadius: '12px',
-                            padding: '1rem 1.5rem'
-                        }}>
-                            <div style={{ color: '#86efac', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.5rem' }}>
-                                ✅ 안전의 길로 얻는 가치
-                            </div>
-                            <p style={{ color: '#f1f5f9', fontSize: '1rem', margin: 0 }}>
-                                {personas[activeTab].value}
-                            </p>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* AI Highlight Section */}
+            {/* Avatar & Items Section */}
             <section style={{
                 padding: '6rem 2rem',
-                background: '#1e293b',
+                background: 'linear-gradient(180deg, #0f3460 0%, #1a1a2e 100%)',
                 textAlign: 'center'
             }}>
                 <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                     <div style={{
                         display: 'inline-block',
-                        background: 'rgba(59, 130, 246, 0.1)',
-                        border: '1px solid rgba(59, 130, 246, 0.3)',
+                        background: 'rgba(167, 139, 250, 0.15)',
+                        border: '1px solid rgba(167, 139, 250, 0.3)',
                         borderRadius: '50px',
                         padding: '0.5rem 1.5rem',
-                        fontSize: '0.85rem',
-                        color: '#60a5fa',
+                        fontSize: '0.9rem',
+                        color: '#a78bfa',
                         marginBottom: '1.5rem'
                     }}>
-                        🤖 AI 기반 차별화
+                        👕 아바타 & 아이템
                     </div>
 
                     <h2 style={{
-                        fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                        fontWeight: '700',
+                        fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+                        fontWeight: '800',
                         marginBottom: '1rem',
                         color: 'white'
                     }}>
-                        <span style={{ color: '#60a5fa' }}>감(感)이 아닌,</span><br />
-                        기준 있는 안전관리
+                        <span style={{ color: '#a78bfa' }}>나만의 캐릭터</span>를 꾸미세요
                     </h2>
 
-                    <p style={{ color: '#94a3b8', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem' }}>
-                        작업사진 AI 분석으로 고위험 작업을 사전에 감지하고<br />
-                        데이터 기반의 예방 중심 안전관리를 실현합니다
+                    <p style={{ color: '#94a3b8', marginBottom: '3rem' }}>
+                        안전 장비 아이템을 수집하고 레어·에픽·레전더리 등급에 도전하세요
                     </p>
 
+                    {/* 아이템 등급 카드 */}
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                        gap: '1.5rem'
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                        gap: '1rem',
+                        marginBottom: '2rem'
                     }}>
                         {[
-                            { level: '안전', color: '#22c55e', icon: '✅', desc: '기준 충족' },
-                            { level: '주의', color: '#f59e0b', icon: '⚠️', desc: '확인 필요' },
-                            { level: '위험', color: '#ef4444', icon: '🚨', desc: '즉시 조치' }
+                            { grade: 'Common', color: '#9ca3af', icon: '🪖', name: '기본 안전모' },
+                            { grade: 'Rare', color: '#60a5fa', icon: '🦺', name: '형광 조끼' },
+                            { grade: 'Epic', color: '#a78bfa', icon: '🥾', name: '안전화' },
+                            { grade: 'Legendary', color: '#fbbf24', icon: '👑', name: '골드 헬멧' }
                         ].map((item, index) => (
                             <div key={index} style={{
-                                background: `rgba(${item.level === '안전' ? '34, 197, 94' : item.level === '주의' ? '245, 158, 11' : '239, 68, 68'}, 0.1)`,
-                                border: `2px solid ${item.color}`,
+                                background: `${item.color}10`,
+                                border: `2px solid ${item.color}40`,
                                 borderRadius: '16px',
-                                padding: '2rem'
-                            }}>
-                                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
-                                <div style={{ color: item.color, fontSize: '1.5rem', fontWeight: '700', marginBottom: '0.5rem' }}>
-                                    {item.level}
+                                padding: '1.5rem 1rem',
+                                transition: 'all 0.3s ease'
+                            }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.transform = 'scale(1.05)';
+                                    e.currentTarget.style.borderColor = item.color;
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.transform = 'scale(1)';
+                                    e.currentTarget.style.borderColor = `${item.color}40`;
+                                }}>
+                                <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{item.icon}</div>
+                                <div style={{ color: item.color, fontSize: '0.75rem', fontWeight: '700', marginBottom: '0.25rem' }}>
+                                    {item.grade}
                                 </div>
-                                <div style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{item.desc}</div>
+                                <div style={{ color: '#e2e8f0', fontSize: '0.9rem', fontWeight: '600' }}>
+                                    {item.name}
+                                </div>
                             </div>
                         ))}
-                    </div>
-
-                    <div style={{ marginTop: '2rem' }}>
-                        <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-                            🏷️ 보호구 미착용 / 추락 위험 / 난간 없음 등 <strong style={{ color: '#60a5fa' }}>위험 태그 자동 제공</strong>
-                        </p>
                     </div>
                 </div>
             </section>
 
-            {/* Trust Section - 경영진 설득 */}
+            {/* Benefits Section */}
             <section style={{
                 padding: '6rem 2rem',
-                background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
+                background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 100%)',
                 textAlign: 'center'
             }}>
                 <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                     <h2 style={{
-                        fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-                        fontWeight: '700',
-                        marginBottom: '1rem',
+                        fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+                        fontWeight: '800',
+                        marginBottom: '3rem',
                         color: 'white'
                     }}>
-                        <span style={{ color: '#fbbf24' }}>경영진</span>을 위한 핵심 가치
+                        왜 <span style={{ color: '#34d399' }}>안전의 길</span>인가요?
                     </h2>
-                    <p style={{ color: '#94a3b8', marginBottom: '3rem' }}>
-                        "우리는 이렇게 관리했다"는 객관적 근거 확보
-                    </p>
 
                     <div style={{
                         display: 'grid',
@@ -988,33 +587,37 @@ const LandingPage = ({ onEnter }) => {
                     }}>
                         {[
                             {
-                                icon: '📋',
-                                title: '안전관리 책임 추적',
-                                desc: '모든 점검·승인·조치가 타임스탬프와 함께 기록'
+                                icon: '🎮',
+                                title: '재미있는 참여',
+                                desc: '게임처럼 즐기면서 자연스럽게 안전 습관이 형성됩니다',
+                                color: '#fbbf24'
                             },
                             {
-                                icon: '⚖️',
-                                title: '법적 리스크 최소화',
-                                desc: '중대재해처벌법 대응을 위한 증빙 체계 확보'
+                                icon: '📈',
+                                title: '높은 참여율',
+                                desc: '강제가 아닌 자발적 참여로 실질적인 안전 문화가 정착됩니다',
+                                color: '#34d399'
                             },
                             {
-                                icon: '🔍',
-                                title: '감사 대응 안전관리',
-                                desc: '감사·점검 시 즉시 제출 가능한 데이터'
+                                icon: '🏅',
+                                title: '즉각적 보상',
+                                desc: '안전 활동에 대한 즉각적인 보상으로 동기부여가 유지됩니다',
+                                color: '#60a5fa'
                             }
-                        ].map((item, index) => (
+                        ].map((benefit, index) => (
                             <div key={index} style={{
-                                background: 'rgba(251, 191, 36, 0.05)',
-                                border: '1px solid rgba(251, 191, 36, 0.2)',
-                                borderRadius: '16px',
-                                padding: '2rem'
+                                background: 'rgba(255, 255, 255, 0.03)',
+                                border: `1px solid ${benefit.color}33`,
+                                borderRadius: '20px',
+                                padding: '2rem',
+                                textAlign: 'left'
                             }}>
-                                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
-                                <h3 style={{ color: '#fbbf24', fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.75rem' }}>
-                                    {item.title}
+                                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{benefit.icon}</div>
+                                <h3 style={{ color: benefit.color, fontSize: '1.2rem', fontWeight: '700', marginBottom: '0.75rem' }}>
+                                    {benefit.title}
                                 </h3>
-                                <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.6 }}>
-                                    {item.desc}
+                                <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>
+                                    {benefit.desc}
                                 </p>
                             </div>
                         ))}
@@ -1025,66 +628,105 @@ const LandingPage = ({ onEnter }) => {
             {/* Final CTA Section */}
             <section style={{
                 padding: '6rem 2rem',
-                background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
+                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ef4444 100%)',
                 textAlign: 'center'
             }}>
                 <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🎮</div>
                     <h2 style={{
-                        fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                        fontWeight: '700',
+                        fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
+                        fontWeight: '800',
                         marginBottom: '1rem',
-                        color: 'white'
+                        color: '#1a1a2e'
                     }}>
-                        중대재해를 막는 안전관리,<br />
-                        이제 '증명'까지 자동으로
+                        안전의 길을 시작하세요!
                     </h2>
                     <p style={{
-                        color: 'rgba(255,255,255,0.8)',
+                        color: 'rgba(26, 26, 46, 0.8)',
                         fontSize: '1.1rem',
-                        marginBottom: '2rem'
+                        marginBottom: '2rem',
+                        fontWeight: '500'
                     }}>
-                        법정 자율점검표를 기반으로 한 AI 안전관리 솔루션<br />
-                        지금 바로 시작하세요
+                        퀘스트를 수행하고, 레벨업하고, 보상을 받으세요.<br />
+                        현장 안전관리가 게임처럼 재미있어집니다.
                     </p>
                     <button
                         onClick={onEnter}
                         style={{
-                            padding: '1.25rem 3rem',
-                            fontSize: '1.25rem',
-                            fontWeight: '700',
-                            background: 'white',
-                            color: '#1e40af',
+                            padding: '1.25rem 3.5rem',
+                            fontSize: '1.3rem',
+                            fontWeight: '800',
+                            background: '#1a1a2e',
+                            color: '#fbbf24',
                             border: 'none',
-                            borderRadius: '8px',
+                            borderRadius: '50px',
                             cursor: 'pointer',
                             boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3)',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.5rem'
                         }}
                         onMouseOver={(e) => {
-                            e.target.style.transform = 'translateY(-3px) scale(1.02)';
+                            e.target.style.transform = 'translateY(-3px) scale(1.05)';
                         }}
                         onMouseOut={(e) => {
                             e.target.style.transform = 'translateY(0) scale(1)';
                         }}
                     >
-                        무료로 시작하기
+                        🚀 지금 시작하기
                     </button>
                 </div>
             </section>
 
             {/* Footer */}
             <footer style={{
-                padding: '2rem',
+                padding: '3rem 2rem',
                 background: '#0f172a',
                 color: '#64748b',
                 textAlign: 'center',
                 fontSize: '0.85rem',
                 borderTop: '1px solid #1e293b'
             }}>
-                <p style={{ marginBottom: '0.5rem' }}>
-                    <strong style={{ color: '#94a3b8' }}>안전의 길</strong> | 중대재해처벌법 대응 현장 안전관리 시스템
-                </p>
-                <p>© 2024 Safety Quest. All rights reserved.</p>
+                <div style={{ marginBottom: '1.5rem' }}>
+                    <img src="/assets/safety_road_logo-removebg-preview.png" alt="안전의 길" style={{ width: '32px', height: '32px', objectFit: 'contain', marginRight: '0.5rem' }} />
+                    <strong style={{ color: '#fbbf24', fontSize: '1.1rem' }}>안전의 길</strong>
+                    <span style={{ color: '#94a3b8' }}> | 게이미피케이션 안전관리 플랫폼</span>
+                </div>
+
+                {/* 팀 소개 버튼 */}
+                <button
+                    onClick={onShowTeam}
+                    style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.15)',
+                        borderRadius: '50px',
+                        padding: '0.75rem 1.5rem',
+                        color: '#94a3b8',
+                        cursor: 'pointer',
+                        fontSize: '0.9rem',
+                        fontWeight: '600',
+                        marginBottom: '1.5rem',
+                        transition: 'all 0.3s ease'
+                    }}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.background = 'rgba(251, 191, 36, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.3)';
+                        e.currentTarget.style.color = '#fbbf24';
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                        e.currentTarget.style.color = '#94a3b8';
+                    }}
+                >
+                    👥 팀 소개 보기
+                </button>
+
+                <p style={{ margin: 0 }}>© 2024 Safety Quest. All rights reserved.</p>
             </footer>
 
             {/* 플로팅 CTA */}
@@ -1095,35 +737,32 @@ const LandingPage = ({ onEnter }) => {
                     bottom: '2rem',
                     right: '2rem',
                     padding: '1rem 1.5rem',
-                    fontSize: '0.95rem',
+                    fontSize: '1rem',
                     fontWeight: '700',
-                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                    color: 'white',
+                    background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                    color: '#1a1a2e',
                     border: 'none',
                     borderRadius: '50px',
                     cursor: 'pointer',
-                    boxShadow: '0 8px 30px rgba(59, 130, 246, 0.5)',
+                    boxShadow: '0 8px 30px rgba(251, 191, 36, 0.5)',
                     zIndex: 1000,
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.5rem'
+                    gap: '0.5rem',
+                    animation: 'pulse 2s infinite'
                 }}
             >
-                🛡️ 무료 체험
+                🎮 게임 시작
             </button>
 
             <style>{`
-                @keyframes bounce {
-                    0%, 100% { transform: translateX(-50%) translateY(0); }
-                    50% { transform: translateX(-50%) translateY(10px); }
-                }
-                @keyframes pulse {
-                    0%, 100% { opacity: 1; }
-                    50% { opacity: 0.5; }
-                }
                 @keyframes float {
                     0%, 100% { transform: translateY(0px); }
-                    50% { transform: translateY(-15px); }
+                    50% { transform: translateY(-20px); }
+                }
+                @keyframes pulse {
+                    0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(251, 191, 36, 0.5); }
+                    50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.6); }
                 }
             `}</style>
         </div>
